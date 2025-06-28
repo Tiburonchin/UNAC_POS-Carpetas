@@ -4,7 +4,7 @@ error_reporting(E_ALL);
 
 ini_set('upload_tmp_dir', __DIR__ . '/tmp');
 date_default_timezone_set('America/Lima');
-putenv('GOOGLE_APPLICATION_CREDENTIALS=' . __DIR__ . '/credentials.json');
+putenv('GOOGLE_APPLICATION_CREDENTIALS=' . dirname(__DIR__) . '/config/credentials.json');
 $folderId = '11W8AWynR_e-n8_7MBcl_Aemslo3D6S8B';
 $spreadsheetId = '1W4Fz25lZjDCtq_PnlHajwnqzYi29IyPLWbFYLXYqyjM';
 

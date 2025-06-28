@@ -123,8 +123,13 @@
         <div class="card shadow p-4 mb-4 mt-5">
             <h5 class="mb-3">Consultar estado por Token</h5>
             <form id="formToken" class="mb-3">
-                <input type="text" id="tokenInput" placeholder="Ingresa tu token..." required class="form-control mb-2">
-                <button type="submit" class="btn btn-primary">Consultar</button>
+                <div class="input-group mb-3">
+                    <input type="text" id="tokenInput" placeholder="Ingresa tu token..." required class="form-control">
+                    <button type="submit" class="btn btn-primary d-flex align-items-center">
+                        <span id="consultarText">Consultar</span>
+                        <span id="consultarSpinner" class="spinner-border spinner-border-sm ms-2 d-none" role="status" aria-hidden="true"></span>
+                    </button>
+                </div>
             </form>
             <div id="tokenMensaje"></div>
             <table id="tablaToken" class="table table-bordered" style="display:none;">
