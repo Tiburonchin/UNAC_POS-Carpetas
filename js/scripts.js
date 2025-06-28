@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let facultadesData = {};
 
     // Cargar programas.json y poblar facultades
-    fetch('programas_detalle_programa.json')
+    fetch('config/programas_detalle_programa.json')
         .then(response => response.json())
         .then(data => {
             facultadesData = data;
@@ -85,51 +85,47 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         // Buscar postulante
-        fetch('api_postulantes.php', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: `action=buscar&dni=${encodeURIComponent(dni)}&programa=${encodeURIComponent(programa)}`
-        })
-        .then(res => res.json())
-        .then(data => {
-            console.log(data);
-            if (data.encontrado) {
-                respuestaDiv.innerHTML = `
-                    <div>
-                        <strong>DNI:</strong> ${data.dni}<br>
-                        <strong>Nombre:</strong> ${data.nombres} ${data.apellidos}<br>
-                        <strong>Correo:</strong> ${data.correo}<br>
-                        <strong>Facultad:</strong> ${data.facultad}<br>
-                        <strong>Programa:</strong> ${data.programa}<br>
-                        <span class="text-success">¡Postulante encontrado!</span>
-                        ${data.token ? `<span class="ms-3 badge bg-info text-dark">Token: <b>${data.token}</b></span>` : ''}
-                    </div>
-                `;
-                // Mostrar sección de subida
-                document.getElementById('subidaDocumentos').classList.remove('d-none');
-                document.getElementById('subidaSection').classList.remove('d-none');
-                // Rellenar los campos ocultos del formulario de subida
-                document.getElementById('dniSubida').value = data.dni;
-                document.getElementById('nombreSubida').value = data.nombres + ' ' + data.apellidos;
-                document.getElementById('correoSubida').value = data.correo;
-                document.getElementById('nombrePostulante').textContent = data.nombres;
-                document.getElementById('apellidoPostulante').textContent = data.apellidos;
-                document.getElementById('facultadSubida').value = data.facultad; // data.facultad viene de la búsqueda
-                document.getElementById('programaSubida').value = data.programa; // data.programa viene de la búsqueda
-            } else {
-                respuestaDiv.innerHTML = `<span class="text-danger">${data.mensaje}</span>`;
-                document.getElementById('subidaDocumentos').classList.add('d-none');
-                document.getElementById('subidaSection').classList.add('d-none');
-            }
-        })
-        .catch((err) => {
-            respuestaDiv.innerHTML = '<span class="text-danger">Error en la consulta: ' + err + '</span>';
-            subidaSection.classList.add('d-none');
-        })
-        .finally(() => {
-            if (buscarBtn) buscarBtn.disabled = false;
-            if (spinnerBuscar) spinnerBuscar.classList.add('d-none');
-        });
+        fetch(`api/api_postulantes.php?dni=${dni}&facultad=${encodeURIComponent(facultadSelect.value)}&programa=${encodeURIComponent(programa)}`)
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                if (data.encontrado) {
+                    respuestaDiv.innerHTML = `
+                        <div>
+                            <strong>DNI:</strong> ${data.dni}<br>
+                            <strong>Nombre:</strong> ${data.nombres} ${data.apellidos}<br>
+                            <strong>Correo:</strong> ${data.correo}<br>
+                            <strong>Facultad:</strong> ${data.facultad}<br>
+                            <strong>Programa:</strong> ${data.programa}<br>
+                            <span class="text-success">¡Postulante encontrado!</span>
+                            ${data.token ? `<span class="ms-3 badge bg-info text-dark">Token: <b>${data.token}</b></span>` : ''}
+                        </div>
+                    `;
+                    // Mostrar sección de subida
+                    document.getElementById('subidaDocumentos').classList.remove('d-none');
+                    document.getElementById('subidaSection').classList.remove('d-none');
+                    // Rellenar los campos ocultos del formulario de subida
+                    document.getElementById('dniSubida').value = data.dni;
+                    document.getElementById('nombreSubida').value = data.nombres + ' ' + data.apellidos;
+                    document.getElementById('correoSubida').value = data.correo;
+                    document.getElementById('nombrePostulante').textContent = data.nombres;
+                    document.getElementById('apellidoPostulante').textContent = data.apellidos;
+                    document.getElementById('facultadSubida').value = data.facultad; // data.facultad viene de la búsqueda
+                    document.getElementById('programaSubida').value = data.programa; // data.programa viene de la búsqueda
+                } else {
+                    respuestaDiv.innerHTML = `<span class="text-danger">${data.mensaje}</span>`;
+                    document.getElementById('subidaDocumentos').classList.add('d-none');
+                    document.getElementById('subidaSection').classList.add('d-none');
+                }
+            })
+            .catch((err) => {
+                respuestaDiv.innerHTML = '<span class="text-danger">Error en la consulta: ' + err + '</span>';
+                subidaSection.classList.add('d-none');
+            })
+            .finally(() => {
+                if (buscarBtn) buscarBtn.disabled = false;
+                if (spinnerBuscar) spinnerBuscar.classList.add('d-none');
+            });
     });
 
     // Simulación de subida de archivos
@@ -150,33 +146,33 @@ document.addEventListener('DOMContentLoaded', function () {
             const formData = new FormData(formSubida);
             formData.set('action', 'subir_archivos');
 
-            fetch('api_postulantes.php', {
+            fetch('api/form_postulantes.php', {
                 method: 'POST',
                 body: formData
             })
-            .then(res => res.json())
-            .then(data => {
-                if (data.ok) {
-                    mensaje.innerHTML = `
-                        <div class="alert alert-success mt-3">
-                            ${data.mensaje}
-                        </div>
-                    `;
-                    formSubida.reset();
-                } else {
-                    mensaje.textContent = data.mensaje || 'Error al subir archivos.';
+                .then(res => res.json())
+                .then(data => {
+                    if (data.ok) {
+                        mensaje.innerHTML = `
+                            <div class="alert alert-success mt-3">
+                                ${data.mensaje}
+                            </div>
+                        `;
+                        formSubida.reset();
+                    } else {
+                        mensaje.textContent = data.mensaje || 'Error al subir archivos.';
+                        mensaje.className = "alert alert-danger mt-3";
+                    }
+                })
+                .catch(() => {
+                    mensaje.textContent = 'Error de red al subir archivos.';
                     mensaje.className = "alert alert-danger mt-3";
-                }
-            })
-            .catch(() => {
-                mensaje.textContent = 'Error de red al subir archivos.';
-                mensaje.className = "alert alert-danger mt-3";
-            })
-            .finally(() => {
-                // Habilitar el botón y ocultar el spinner después de la respuesta
-                if (submitBtn) submitBtn.disabled = false;
-                if (spinner) spinner.classList.add('d-none'); // Ocultar spinner
-            });
+                })
+                .finally(() => {
+                    // Habilitar el botón y ocultar el spinner después de la respuesta
+                    if (submitBtn) submitBtn.disabled = false;
+                    if (spinner) spinner.classList.add('d-none'); // Ocultar spinner
+                });
         });
     }
 
@@ -199,13 +195,38 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
             // Consultar token
-            fetch('api_postulantes.php', {
+            fetch('api/form_postulantes.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                 body: `action=consultar_token&token=${encodeURIComponent(token)}`
             })
-            .then(res => res.json())
-            .then(data => {
+                .then(res => res.json())
+                .then(data => {
+                    if (data.encontrado) {
+                        mensaje.innerHTML = `
+                            <div class="mb-2">
+                                <strong class="text-primary">Token de acceso:</strong>
+                                <span class="fw-bold">${token}</span>
+                            </div>
+                        `;
+                        tbody.innerHTML = `
+                            <tr>
+                                <td>${data.dni}</td>
+                                <td>${data.nombre}</td>
+                                <td>${data.correo}</td>
+                                <td><a href="${data.carpeta}" target="_blank">Ver carpeta</a></td>
+                                <td>${data.estado}</td>
+                                <td>${data.mensaje_estado}</td>
+                            </tr>
+                        `;
+                        tabla.style.display = '';
+                    } else {
+                        mensaje.innerHTML = `<div class="alert alert-danger">${data.mensaje}</div>`;
+                        tabla.style.display = 'none';
+                    }
+                })
+                .catch(() => {
+                    mensaje.innerHTML = '<div class="alert alert-danger">Error al consultar el token.</div>';
                 if (data.encontrado) {
                     mensaje.innerHTML = `
                         <div class="mb-2">
@@ -237,7 +258,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Cargar programas_detalle_programa.json y poblar el select
-    fetch('programas_detalle_programa.json')
+    fetch('config/programas_detalle_programa.json')
         .then(response => response.json())
         .then(data => {
             facultadesData = data;

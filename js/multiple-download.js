@@ -1,17 +1,19 @@
 function downloadMultiplePDFs(event) {
-    event.preventDefault(); // Evita que el enlace navegue a "#"
+    event.preventDefault();
 
     const urls = [
-        "https://drive.google.com/uc?export=download&id=1gAoeagoAVEp5H-P5fG_odpl6LVwVVwTP",
-        "https://drive.google.com/uc?export=download&id=1R0gQzgTNiBetPFgW5e8BNbExSVRAxYzi"
+        "https://raw.githubusercontent.com/Tiburonchin/GUIAS-PDS/main/Actividad%206.pdf",
+        "https://raw.githubusercontent.com/Tiburonchin/GUIAS-PDS/main/Constancia%20de%20Matricula-11-01-2025%2018_45_23.pdf"
     ];
 
     urls.forEach((url, index) => {
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = `archivo${index + 1}.pdf`; // Cambia el nombre si deseas
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
+        setTimeout(() => {
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = `archivo${index + 1}.pdf`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }, index * 1000); // 1000ms (1 segundo) entre cada descarga
     });
 }
