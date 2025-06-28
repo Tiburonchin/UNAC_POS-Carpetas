@@ -1,0 +1,69 @@
+.download-container {
+    display: flex;
+    gap: 2rem;
+    margin-top: 1rem;
+}
+
+.download-card {
+    position: relative;
+    width: 200px;
+    height: 250px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.download-card:hover {
+    transform: translateY(-5px);
+}
+
+.download-preview {
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    border: 2px solid #007bff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.download-preview:hover {
+    border-color: #0056b3;
+}
+
+.download-icon {
+    font-size: 4rem;
+    color: #007bff;
+}
+
+.download-description {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 1rem;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    text-align: center;
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+}
+
+.download-card:hover .download-description {
+    transform: translateY(0);
+}
+
+.download-animation {
+    animation: slideDown 0.5s ease-out forwards;
+}
+
+@keyframes slideDown {
+    from {
+        transform: translateY(-100%);
+    }
+    to {
+        transform: translateY(0);
+    }
+}

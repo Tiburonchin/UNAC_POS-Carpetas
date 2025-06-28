@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UNAC Posgrado - Buscar Postulante</title>
+    <!-- Puedes usar Bootstrap o Tailwind para estilos modernos -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles.css"><!-- Tu CSS personalizado -->
+    <link rel="stylesheet" href="styles/download-animation.css">
+    <link rel="icon" href="ep.png">
+</head>
+<body class="bg-light">
+    <header class="d-flex align-items-center p-3 shadow-sm bg-white mb-4">
+        <img src="ep.png" alt="Logo UNAC" width="60" class="me-3">
+        <div>
+            <h1 class="h4 mb-0">Universidad Nacional del Callao</h1>
+            <span class="text-muted">Escuela de Posgrado</span>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="row">
+            <!-- Sección de búsqueda -->
+            <section class="col-md-5 mb-4">
+                <div class="card shadow-lg p-4">
+                    <h2 class="h5 mb-3">Buscar Postulante</h2>
+                    <form id="buscarForm" class="mb-3">
+                        <div class="mb-3">
+                            <label for="dni" class="form-label">DNI del postulante</label>
+                            <input 
+                                type="text" 
+                                id="dni" 
+                                name="dni"
+                                class="form-control shadow-sm" 
+                                maxlength="8"
+                                pattern="\d{8}" 
+                                placeholder="Ingrese DNI (8 dígitos)" 
+                                required
+                            >
+                        </div>
+                        <div class="mb-3">
+                            <label for="facultad" class="form-label">Facultad</label>
+                            <select id="facultad" class="form-select"></select>
+                        </div>
+                        <div id="tiposPrograma" class="mb-3"></div>
+                        <div class="mb-3" id="programaContainer" style="display:none;">
+                            <label for="programa" class="form-label">Programa Específico</label>
+                            <select id="programa" name="programa" class="form-select" required>
+                                <option value="">Cargando programas...</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <button type="submit" class="btn btn-primary w-100 d-flex align-items-center justify-content-center position-relative" style="height: 48px;">
+                                <span class="me-2 d-flex align-items-center">
+                                    Buscar postulante
+                                    <!-- Ícono de lupa moderno (Bootstrap Icon) -->
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-search ms-2" viewBox="0 0 16 16">
+                                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.099zm-5.242 1.656a5.5 5.5 0 1 1 0-11 5.5 5.5 0 0 1 0 11z"/>
+                                    </svg>
+                                </span>
+                                <!-- Spinner dentro del botón, oculto por defecto -->
+                                <span id="spinnerBuscar" class="spinner-border spinner-border-sm text-light ms-2 d-none" role="status" aria-hidden="true" style="position: absolute; right: 16px;"></span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+
+            <!-- Sección de respuesta -->
+            <aside class="col-md-7 mb-4">
+                <div id="respuesta" class="card shadow-lg p-4 h-100 d-flex align-items-center justify-content-center text-center">
+                    <span class="text-muted">Aquí aparecerá la información del postulante o el token generado.</span>
+                </div>
+            </aside>
+        </div>
+
+        <!-- Agrega esto debajo de la sección de respuesta, dentro del <main class="container"> -->
+        <section id="subidaDocumentos" class="card shadow-lg p-4 mt-4 d-none">
+            <div id="subidaSection" class="d-none">
+                <h3 class="h5 mb-3">
+                    Hola <span id="nombrePostulante" class="text-primary"></span> <span id="apellidoPostulante" class="text-primary"></span>!
+                </h3>
+                <p>Por favor suba sus documentos solicitados:</p>
+                <form id="formSubida" enctype="multipart/form-data">
+                    <input type="hidden" name="action" value="subir_archivos">
+                    <input type="hidden" id="facultadSubida" name="facultad" value="">
+                    <input type="hidden" id="programaSubida" name="programa" value="">
+                    <div class="mb-3">
+                        <label for="dniSubida" class="form-label">DNI</label>
+                        <input type="text" class="form-control" id="dniSubida" name="dni" required placeholder="DNI">
+                    </div>
+                    <div class="mb-3">
+                        <label for="nombreSubida" class="form-label">Nombre</label>
+                        <input type="text" class="form-control" id="nombreSubida" name="nombre" required placeholder="Nombre">
+                    </div>
+                    <div class="mb-3">
+                        <label for="correoSubida" class="form-label">Correo</label>
+                        <input type="email" class="form-control" id="correoSubida" name="correo" required placeholder="Correo">
+                    </div>
+                    <div class="mb-3">
+                        <label for="archivoPdf" class="form-label">Archivo PDF (máx 5MB)</label>
+                        <input type="file" class="form-control" id="archivoPdf" name="archivoPdf" accept="application/pdf" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="imagen" class="form-label">Imagen (JPG, PNG, máx 2MB)</label>
+                        <input type="file" class="form-control" id="imagen" name="imagen" accept="image/png, image/jpeg" required>
+                    </div>
+                    <div class="mb-3">
+                    <!-- Ejemplo con Google reCAPTCHA v2 -->
+                    <div class="g-recaptcha mb-3" data-sitekey="6LdtvVMrAAAAAFOIiU2CFLJN9UqcsBh6GvC6h--W"></div>
+            </div>
+                    <button type="submit" class="btn btn-success shadow-sm">
+                        Subir Archivos
+                    </button>
+                    <span id="spinnerSubida" class="spinner-border spinner-border-sm text-primary ms-2 d-none" role="status" aria-hidden="true"></span>
+                </form>
+            </div>
+            <div id="mensajeSubida" class="mt-3"></div>
+        </section>
+
+        <!-- Sección de consulta por token, visible siempre -->
+        <div class="card shadow p-4 mb-4 mt-5">
+            <h5 class="mb-3">Consultar estado por Token</h5>
+            <form id="formToken" class="mb-3">
+                <input type="text" id="tokenInput" placeholder="Ingresa tu token..." required class="form-control mb-2">
+                <button type="submit" class="btn btn-primary">Consultar</button>
+            </form>
+            <div id="tokenMensaje"></div>
+            <table id="tablaToken" class="table table-bordered" style="display:none;">
+                <thead>
+                    <tr>
+                        <th>DNI</th>
+                        <th>Nombre</th>
+                        <th>Correo</th>
+                        <th>Carpeta Drive</th>
+                        <th>Estado</th>
+                        <th>Mensaje del Estado</th>
+                    </tr>
+                </thead>
+                <tbody id="tablaTokenBody"></tbody>
+            </table>
+        </div>
+        
+        <div class="card shadow p-4 mb-4 mt-5 help-section">
+            <h5 class="help-title">¿Necesitas Ayuda?</h5>
+            <h6 class="mb-4">Guías para inscripción:</h6>
+            
+            <div class="help-container">
+                <a class="help-card card-1" id="downloadGuia" href="#" onclick="downloadMultiplePDFs(event)">
+                    <h3>Guía para Postulantes</h3>
+                    <p class="small">Tutorial paso a paso para completar tu proceso de inscripción correctamente.</p>
+                    <div class="go-corner" href="#">
+                        <div class="go-arrow">
+                            →
+                        </div>
+                    </div>
+                </a>
+                
+                <a class="help-card card-2" href="#">
+                    <h3>Requisitos Documentales</h3>
+                    <p class="small">Lista completa de documentos necesarios según el programa al que postules.</p>
+                    <div class="go-corner" href="#">
+                        <div class="go-arrow">
+                            →
+                        </div>
+                    </div>
+                </a>
+                
+                <a class="help-card card-3" href="#">
+                    <h3>Cronograma Académico</h3>
+                    <p class="small">"Calendario 2025-B: Admisión, clases, exámenes subsanación"</p>
+                    <div class="go-corner" href="#">
+                        <div class="go-arrow">
+                            →
+                        </div>
+                    </div>
+                </a>
+                
+                <a class="help-card card-4" href="#">
+                    <h3>Contacto y Soporte</h3>
+                    <p class="small">Información de contacto del equipo de admisiones para asistencia personalizada.</p>
+                    <div class="go-corner" href="#">
+                        <div class="go-arrow">
+                            →
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </main>
+    <script src="scripts.js"></script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script src="js/multiple-download.js"></script>
+</body>
+</html>
