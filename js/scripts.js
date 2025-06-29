@@ -145,10 +145,34 @@ document.addEventListener('DOMContentLoaded', function () {
             const submitBtn = formSubida.querySelector('button[type="submit"]');
             const spinner = document.getElementById('spinnerSubida');
             if (submitBtn) submitBtn.disabled = true;
-            if (spinner) spinner.classList.remove('d-none'); // Mostrar spinner
+            if (spinner) spinner.classList.remove('d-none');
 
-            const formData = new FormData(formSubida);
-            formData.set('action', 'subir_archivos');
+            // Crear FormData y agregar campos manualmente para asegurar que todo se envíe correctamente
+            const formData = new FormData();
+            
+            // Agregar campos del formulario
+            formData.append('action', 'subir_archivos');
+            formData.append('dni', document.getElementById('dniSubida').value);
+            formData.append('nombre', document.getElementById('nombreSubida').value);
+            formData.append('correo', document.getElementById('correoSubida').value);
+            formData.append('facultad', document.getElementById('facultadSubida').value);
+            formData.append('programa', document.getElementById('programaSubida').value);
+            
+            // Agregar archivos
+            const pdfInput = document.getElementById('archivoPdf');
+            const imgInput = document.getElementById('imagen');
+            
+            if (pdfInput && pdfInput.files.length > 0) {
+                formData.append('archivoPdf', pdfInput.files[0]);
+            } else {
+                throw new Error('Por favor, selecciona un archivo PDF.');
+            }
+            
+            if (imgInput && imgInput.files.length > 0) {
+                formData.append('imagen', imgInput.files[0]);
+            } else {
+                throw new Error('Por favor, selecciona una imagen.');
+            }
 
             fetch('/envio_carpeta_pos/api/api_postulantes.php', {
                 method: 'POST',
@@ -175,7 +199,7 @@ document.addEventListener('DOMContentLoaded', function () {
             .finally(() => {
                 // Habilitar el botón y ocultar el spinner después de la respuesta
                 if (submitBtn) submitBtn.disabled = false;
-                if (spinner) spinner.classList.add('d-none'); // Ocultar spinner
+                if (spinner) spinner.classList.add('d-none');
             });
         });
     }
@@ -231,14 +255,15 @@ document.addEventListener('DOMContentLoaded', function () {
                             <span class="fw-bold">${token}</span>
                         </div>
                     `;
+                    const estadoClass = data.estado === 'Aprobado' ? 'bg-success' : 'bg-danger';
                     tbody.innerHTML = `
                         <tr>
-                            <td>${data.dni || ''}</td>
-                            <td>${data.nombre || ''}</td>
-                            <td>${data.correo || ''}</td>
-                            <td>${data.carpeta ? `<a href="${data.carpeta}" target="_blank">Ver carpeta</a>` : 'N/A'}</td>
-                            <td>${data.estado || ''}</td>
-                            <td>${data.mensaje_estado || ''}</td>
+                            <td data-title="DNI">${data.dni}</td>
+                            <td data-title="Nombre">${data.nombre} ${data.apellido_paterno} ${data.apellido_materno}</td>
+                            <td data-title="Correo">${data.correo}</td>
+                            <td data-title="Carpeta Drive">${data.carpeta_drive || 'No disponible'}</td>
+                            <td data-title="Estado"><span class="badge ${estadoClass}">${data.estado || 'Pendiente'}</span></td>
+                            <td data-title="Mensaje">${data.mensaje_estado || 'En proceso de revisión'}</td>
                         </tr>
                     `;
                     tabla.style.display = '';
@@ -262,7 +287,8 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Cargar programas_detalle_programa.json y poblar el select
-    fetch('programas_detalle_programa.json')
+    const jsonPath = '/envio_carpeta_pos/config/programas_detalle_programa.json';
+    fetch(jsonPath)
         .then(response => response.json())
         .then(data => {
             facultadesData = data;
@@ -274,7 +300,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 facultadSelect.appendChild(option);
             });
         })
-        .catch(() => {
+        .catch((error) => {
+            console.error('Error al cargar el archivo JSON:', error);
             facultadSelect.innerHTML = '<option value="">Error al cargar facultades</option>';
         });
 });

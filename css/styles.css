@@ -13,7 +13,7 @@ header {
 .title {
     font-family: 'Parastoo', serif;
     color: #01579b;
-    font-size: 2.1rem;
+    font-size: 2rem;
     font-weight: 800;
     margin-bottom: -0.2rem;
 }
@@ -59,40 +59,146 @@ header {
     box-shadow: 0 0 0 2px #b3d4fc;
 }
 
-/* Botón lupa */
+/* Botón principal - Dorado UNAC */
 .btn-primary {
-    background: linear-gradient(90deg, #FFC107 60%, #FFA000 100%);
+    background: #FFC107;  /* Un tono más oscuro que #FFC107 */
     border: none;
     border-radius: 0.7rem;
-    box-shadow: 0 2px 8px rgba(0, 123, 255, 0.10);
-    transition: background 0.2s, box-shadow 0.2s;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
     display: flex;
     align-items: center;
     justify-content: center;
+    color: #2c2c2c;
+    font-weight: 500;
 }
 
 .btn-primary:hover,
 .btn-primary:focus {
-    background: linear-gradient(90deg, #FFA000 60%, #ffa20071 100%);
-    box-shadow: 0 4px 16px rgba(0, 123, 255, 0.18);
+    background: #FFC107;  /* Un tono más oscuro al hacer hover */
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
 /* Botón de tipo de programa seleccionado */
 .active-programa,
 .btn-outline-primary.active-programa {
-    background: linear-gradient(90deg, #FFA000 60%, #ffa20071 100%);
+    background: #FFC107;  /* Un tono más oscuro para el botón activo */
     color: #fff !important;
-    border-color: #FFA000 !important;
-    box-shadow: 0 2px 8px rgba(0, 123, 255, 0.13);
+    border: none !important;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    font-weight: 500;
+}
+
+.active-programa:hover,
+.btn-outline-primary.active-programa:hover {
+    background: #FFC107;  /* Un tono más oscuro al hacer hover */
+    transform: translateY(-2px);
 }
 
 /* Titulo de la seccion de consulta por token */
 .Token-title {
     color: #01579b;
-    margin-bottom: 1.5rem;
-    font-size: 1.4rem;
+    margin-bottom: 1.2rem;
+    font-size: 1.2rem;
     font-weight: 600;
 }
+
+/* Estilos para la tabla de token */
+.table-responsive {
+    border-radius: 0.5rem;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    max-width: 100%;
+    margin: 0 auto;
+    display: block;
+    width: 100%;
+}
+
+#tablaToken {
+    margin-bottom: 0;
+    font-size: 0.9rem;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#tablaToken th {
+    font-weight: 600;
+    background-color: #f8f9fa;
+    text-align: left;
+    padding: 12px 8px;
+}
+
+#tablaToken td {
+    padding: 10px 8px;
+    border-top: 1px solid #dee2e6;
+    vertical-align: top;
+}
+
+/* Estilos para dispositivos móviles */
+@media (max-width: 767.98px) {
+    .table-responsive {
+        border: 1px solid #dee2e6;
+        border-radius: 0.5rem;
+        overflow: hidden;
+    }
+    
+    #tablaToken, 
+    #tablaToken thead, 
+    #tablaToken tbody, 
+    #tablaToken th, 
+    #tablaToken td, 
+    #tablaToken tr { 
+        display: block; 
+    }
+    
+    #tablaToken thead tr { 
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+    
+    #tablaToken tr {
+        border-bottom: 1px solid #dee2e6;
+        padding: 8px 0;
+    }
+    
+    #tablaToken tr:last-child {
+        border-bottom: none;
+    }
+    
+    #tablaToken td { 
+        border: none;
+        border-bottom: 1px solid #eee; 
+        position: relative;
+        padding-left: 50%; 
+        white-space: normal;
+        text-align: left;
+        min-height: 30px;
+    }
+    
+    #tablaToken td:before { 
+        position: absolute;
+        left: 8px;
+        width: 45%; 
+        padding-right: 10px; 
+        white-space: nowrap;
+        text-align: left;
+        font-weight: bold;
+        content: attr(data-title);
+    }
+    
+    #tablaToken td:last-child {
+        border-bottom: 0;
+    }
+    
+    #tablaToken .btn {
+        margin-top: 5px;
+        width: 100%;
+    }
+}
+
 /* Respuesta */
 #respuesta {
     min-height: 220px;

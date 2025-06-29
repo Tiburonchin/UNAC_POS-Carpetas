@@ -72,24 +72,8 @@ try {
             $correo = trim($_POST['correo'] ?? '');
             $pdf = $_FILES['archivoPdf'] ?? null;
             $img = $_FILES['imagen'] ?? null;
-            $facultad = trim($_POST['facultad'] ?? '');   // <-- AGREGA ESTA LÍNEA
-            $programa = trim($_POST['programa'] ?? '');   // <-- Y ESTA LÍNEA
-            $recaptcha = $_POST['g-recaptcha-response'] ?? '';
-
-            // Validar reCAPTCHA
-            if (!$recaptcha) {
-                echo json_encode(['ok' => false, 'mensaje' => 'Por favor completa el captcha.']);
-                exit;
-            }
-            $secret = '6Lc6ZGorAAAAAHoajZuOGiZyCMTcM8gGA7IRfxrV';
-            $verify = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=$secret&response=$recaptcha");
-            $captcha_success = json_decode($verify);
-
-            if (empty($captcha_success->success) || !$captcha_success->success) {
-                echo json_encode(['ok' => false, 'mensaje' => 'Captcha inválido, inténtalo de nuevo.']);
-                exit;
-            }
-
+            $facultad = trim($_POST['facultad'] ?? '');   
+            $programa = trim($_POST['programa'] ?? '');   
             // Validar campos
             if (!$dni || !$nombre || !$correo || !$pdf || !$img || !$facultad || !$programa) {
                 echo json_encode(['ok' => false, 'mensaje' => 'Faltan datos o archivos.']);
