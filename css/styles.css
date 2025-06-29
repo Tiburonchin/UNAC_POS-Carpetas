@@ -23,7 +23,13 @@ header {
 .card:hover {
     box-shadow: 0 8px 32px rgba(0, 60, 120, 0.16), 0 2px 8px rgba(0, 0, 0, 0.06);
 }
-
+/* Titulo de la seccion de busqueda */
+.Search-title {
+    color: #01579b;
+    margin-bottom: 1.5rem;
+    font-size: 1.4rem;
+    font-weight: 600;
+}
 /* Inputs y selects */
 .form-control,
 .form-select {
@@ -42,7 +48,7 @@ header {
 
 /* Botón lupa */
 .btn-primary {
-    background: linear-gradient(90deg, #0056b3 60%, #007bff 100%);
+    background: linear-gradient(90deg, #FFC107 60%, #FFA000 100%);
     border: none;
     border-radius: 0.7rem;
     box-shadow: 0 2px 8px rgba(0, 123, 255, 0.10);
@@ -54,19 +60,26 @@ header {
 
 .btn-primary:hover,
 .btn-primary:focus {
-    background: linear-gradient(90deg, #007bff 60%, #0056b3 100%);
+    background: linear-gradient(90deg, #FFA000 60%, #ffa20071 100%);
     box-shadow: 0 4px 16px rgba(0, 123, 255, 0.18);
 }
 
 /* Botón de tipo de programa seleccionado */
 .active-programa,
 .btn-outline-primary.active-programa {
-    background: linear-gradient(90deg, #007bff 60%, #0056b3 100%);
+    background: linear-gradient(90deg, #FFA000 60%, #ffa20071 100%);
     color: #fff !important;
-    border-color: #0056b3 !important;
+    border-color: #FFA000 !important;
     box-shadow: 0 2px 8px rgba(0, 123, 255, 0.13);
 }
 
+/* Titulo de la seccion de consulta por token */
+.Token-title {
+    color: #01579b;
+    margin-bottom: 1.5rem;
+    font-size: 1.4rem;
+    font-weight: 600;
+}
 /* Respuesta */
 #respuesta {
     min-height: 220px;
@@ -256,19 +269,19 @@ header {
 
 /* Variantes de color para cada tarjeta */
 .card-1:before, .card-1 .go-corner {
-    background: #0288d1;
+    background: #FFC107;
 }
 
 .card-2:before, .card-2 .go-corner {
-    background: #0097a7;
+    background: #FFC107;
 }
 
 .card-3:before, .card-3 .go-corner {
-    background: #00796b;
+    background: #FFC107;
 }
 
 .card-4:before, .card-4 .go-corner {
-    background: #5d4037;
+    background: #FFC107;
 }
 
 /* Responsive */
