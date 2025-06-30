@@ -116,9 +116,15 @@ try {
             <span class='text-muted small'>Archivos subidos exitosamente</span>
         </div>
     </div>
+<<<<<<< HEAD
     <div class='card bg-white border-primary shadow-sm p-4 mb-2 expediente-card' style='max-width: 600px; margin: 0 auto;'>
         <div class='d-flex justify-content-between align-items-center mb-3'>
             <span class='h6'><i class='fas fa-clipboard-check me-2'></i><b>CÓDIGO DE EXPEDIENTE:</b></span>
+=======
+    <div class='card bg-white border-primary shadow-sm p-4 mb-2' style='max-width: 600px; margin: 0 auto;'>
+        <div class='d-flex justify-content-between align-items-center mb-3'>
+            <span class='h6'><i class='fas fa-clipboard-check me-2'></i><b>CÓDIGO DE EXPEDIENTE</b></span>
+>>>>>>> 5df195c77a13c2ca26b4b343bfa2df7244a1030b
         </div>
         <div class='d-flex flex-column align-items-center'>
             <div class='d-flex align-items-center mt-2 w-100 justify-content-center'>
