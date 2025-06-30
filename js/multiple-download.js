@@ -2,8 +2,8 @@ function downloadMultiplePDFs(event) {
     event.preventDefault();
 
     const urls = [
-        "https://raw.githubusercontent.com/Tiburonchin/GUIAS-PDS/main/Actividad%206.pdf",
-        "https://raw.githubusercontent.com/Tiburonchin/GUIAS-PDS/main/Constancia%20de%20Matricula-11-01-2025%2018_45_23.pdf"
+        "https://raw.githubusercontent.com/Tiburonchin/GUIAS-PDS/main/UNIVERSIDAD%20NACIONAL%20DEL%20CALLAO_guia%20de%20postulante.pdf",
+        "https://raw.githubusercontent.com/Tiburonchin/GUIAS-PDS/main/manual-de-pago-postulantes.pdf"
     ];
 
     urls.forEach((url, index) => {

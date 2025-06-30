@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let facultadesData = {};
 
     // Cargar programas.json y poblar facultades
-    fetch('/envio_carpeta_pos/config/programas_detalle_programa.json')
+    fetch('/PAG_CARPETAS_FINAL/config/programas_detalle_programa.json')
         .then(response => response.json())
         .then(data => {
             facultadesData = data;
@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         // Buscar postulante
-        fetch('/envio_carpeta_pos/api/api_postulantes.php', {
+        fetch('/PAG_CARPETAS_FINAL/api/api_postulantes.php', {
             method: 'POST',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
             body: `action=buscar&dni=${encodeURIComponent(dni)}&programa=${encodeURIComponent(programa)}`
@@ -174,7 +174,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 throw new Error('Por favor, selecciona una imagen.');
             }
 
-            fetch('/envio_carpeta_pos/api/api_postulantes.php', {
+            fetch('/PAG_CARPETAS_FINAL/api/api_postulantes.php', {
                 method: 'POST',
                 body: formData
             })
@@ -236,7 +236,7 @@ document.addEventListener('DOMContentLoaded', function () {
             if (consultarSpinner) consultarSpinner.classList.remove('d-none');
 
             // Consultar token
-            fetch('/envio_carpeta_pos/api/api_postulantes.php', {
+            fetch('/PAG_CARPETAS_FINAL/api/api_postulantes.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                 body: `action=consultar_token&token=${encodeURIComponent(token)}`
@@ -287,7 +287,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Cargar programas_detalle_programa.json y poblar el select
-    const jsonPath = '/envio_carpeta_pos/config/programas_detalle_programa.json';
+    const jsonPath = '/PAG_CARPETAS_FINAL/config/programas_detalle_programa.json';
     fetch(jsonPath)
         .then(response => response.json())
         .then(data => {
