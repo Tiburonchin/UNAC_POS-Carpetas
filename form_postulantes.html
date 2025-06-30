@@ -120,10 +120,10 @@
 
         <!-- Sección de consulta por token, visible siempre -->
         <div class="card shadow p-4 mb-4 mt-5">
-            <h5 class="Token-title">Consultar estado por Token</h5>
+            <h5 class="Token-title">Consultar estado por código de expediente:</h5>
             <form id="formToken" class="mb-3">
                 <div class="input-group mb-3">
-                    <input type="text" id="tokenInput" placeholder="Ingresa tu token..." required class="form-control">
+                    <input type="text" id="tokenInput" placeholder="Ingresa tu código de expediente..." required class="form-control">
                     <button type="submit" class="btn btn-primary d-flex align-items-center">
                         <span id="consultarText">Consultar</span>
                         <span id="consultarSpinner" class="spinner-border spinner-border-sm ms-2 d-none" role="status" aria-hidden="true"></span>
@@ -280,5 +280,6 @@
     <script src="https://kit.fontawesome.com/9101168da7.js" crossorigin="anonymous"></script>
     <script src="js/scripts.js"></script>
     <script src="js/multiple-download.js"></script>
+    <script src="js/clipboard.js"></script>
 </body>
 </html>

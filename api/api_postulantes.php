@@ -3,7 +3,7 @@ header('Content-Type: application/json');
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
-require_once 'form_postulantes.php'; // Solo funciones y carga de datos
+require_once '../form_postulantes.html'; // Solo funciones y carga de datos
 
 $action = $_POST['action'] ?? $_GET['action'] ?? '';
 
@@ -109,7 +109,29 @@ try {
 
             echo json_encode([
                 'ok' => true,
-                'mensaje' => "✅ ¡Archivos subidos y registro guardado! Tu token es: <b>$token</b>"
+                'mensaje' => "<div class='text-center'>
+    <div class='alert alert-success alert-dismissible fade show' role='alert' style='max-width: 600px; margin: 0 auto; padding: 12px;'>
+        <div class='d-flex align-items-center justify-content-center'>
+            <i class='fas fa-check-circle me-2 text-success'></i>
+            <span class='text-muted small'>Archivos subidos exitosamente</span>
+        </div>
+    </div>
+    <div class='card bg-white border-primary shadow-sm p-4 mb-2 expediente-card' style='max-width: 600px; margin: 0 auto;'>
+        <div class='d-flex justify-content-between align-items-center mb-3'>
+            <span class='h6'><i class='fas fa-clipboard-check me-2'></i><b>CÓDIGO DE EXPEDIENTE:</b></span>
+        </div>
+        <div class='d-flex flex-column align-items-center'>
+            <div class='d-flex align-items-center mt-2 w-100 justify-content-center'>
+                <div class='bg-white border-primary rounded-3 p-3' style='min-width: 250px; text-align: center;'>
+                    <span id='codigoEstudiante' class='h5 fw-bold'>$token</span>
+                </div>
+                <button onclick='copiarCodigo()' class='btn btn-sm btn-primary ms-3 mt-2' style='padding: 6px 15px;'>
+                    <i class='fas fa-copy me-1'></i> Copiar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>"
             ]);
             exit;
 
@@ -121,16 +143,3 @@ try {
     exit;
 }
 ?>
-
-
-<!-- Formulario principal -->
-<?php include 'form_postulante_dni.php'; ?>
-
-<!-- Formulario adicional para consultar el estado por token -->
-<h2>🔎 Consultar estado por token de seguimiento:</h2>
-<form method="post" style="margin-top:20px;">
-    <input type="text" name="token_seguimiento" placeholder="Ingresa tu token..." required>
-    <button type="submit" name="consultar_token">Consultar</button>
-</form>
-
-<?= $datos_token ?>

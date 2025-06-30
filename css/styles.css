@@ -61,7 +61,7 @@ header {
 
 /* Botón principal - Dorado UNAC */
 .btn-primary {
-    background: #FFC107;  /* Un tono más oscuro que #FFC107 */
+    background: #FFC107;
     border: none;
     border-radius: 0.7rem;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -75,7 +75,7 @@ header {
 
 .btn-primary:hover,
 .btn-primary:focus {
-    background: #FFC107;  /* Un tono más oscuro al hacer hover */
+    
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
@@ -83,17 +83,17 @@ header {
 /* Botón de tipo de programa seleccionado */
 .active-programa,
 .btn-outline-primary.active-programa {
-    background: #FFC107;  /* Un tono más oscuro para el botón activo */
-    color: #fff !important;
-    border: none !important;
+    background: #FFC107;
+    color: #5c3317 !important; /* Marrón oscuro */
+    border: 1px solid #d4a373 !important; /* Borde ligero marrón */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     font-weight: 500;
 }
 
 .active-programa:hover,
 .btn-outline-primary.active-programa:hover {
-    background: #FFC107;  /* Un tono más oscuro al hacer hover */
     transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
 /* Titulo de la seccion de consulta por token */
@@ -197,7 +197,29 @@ header {
         margin-top: 5px;
         width: 100%;
     }
+
+    /* Estilos específicos para el mensaje de código de expediente */
+    .expediente-card {
+        max-width: 100% !important;
+        margin: 0 !important;
+    }
+
+    .expediente-card .d-flex {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .expediente-card .btn {
+        width: 100%;
+        margin-top: 8px !important;
+    }
+
+    .expediente-card .border-primary {
+        min-width: 100% !important;
+        padding: 12px !important;
+    }
 }
+
 
 /* Respuesta */
 #respuesta {
@@ -337,6 +359,14 @@ header {
     line-height: 1.5;
 }
 
+.help-card:hover h3 {
+    color: #8B4513;
+}
+
+.help-card:hover p {
+    color: #8B4513;
+}
+
 .help-card:before {
     content: "";
     position: absolute;
@@ -354,14 +384,6 @@ header {
 
 .help-card:hover:before {
     transform: scale(21);
-}
-
-.help-card:hover h3 {
-    color: #ffffff;
-}
-
-.help-card:hover p {
-    color: rgba(255, 255, 255, 0.85);
 }
 
 .go-corner {
@@ -384,6 +406,10 @@ header {
     color: white;
     font-family: courier, sans;
     font-weight: bold;
+}
+
+.help-card:hover .go-arrow {
+    color: #ffffff;
 }
 
 /* Variantes de color para cada tarjeta */
