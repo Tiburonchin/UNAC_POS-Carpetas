@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let facultadesData = {};
 
     // Cargar programas.json y poblar facultades
-    fetch('/PAG_CARPETAS_FINAL/config/programas_detalle_programa.json')
+    fetch('config/programas_detalle_programa.json')
         .then(response => response.json())
         .then(data => {
             facultadesData = data;
